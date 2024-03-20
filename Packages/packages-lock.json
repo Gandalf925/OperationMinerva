@@ -102,6 +102,15 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.unity.cinemachine": {
+      "version": "2.9.7",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.test-framework": "1.1.31"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.collab-proxy": {
       "version": "2.3.1",
       "depth": 0,
@@ -265,6 +274,13 @@
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
+    },
+    "com.veriorpies.parrelsync": {
+      "version": "https://github.com/VeriorPies/ParrelSync.git?path=/ParrelSync",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "d1ef610e9fe3ad0b490cce91594449fc0af809a6"
     },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",

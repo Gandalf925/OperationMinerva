@@ -4,7 +4,7 @@ using Fusion;
 using TMPro;
 using UnityEngine;
 
-public class PlayerSpawnerController : NetworkBehaviour, IPlayerJoined
+public class PlayerSpawnerController : NetworkBehaviour, IPlayerJoined, IPlayerLeft
 {
     [SerializeField] NetworkPrefabRef playerNetworkPrefab = NetworkPrefabRef.Empty;
     [SerializeField] Transform[] spawnPoints;
@@ -17,21 +17,40 @@ public class PlayerSpawnerController : NetworkBehaviour, IPlayerJoined
         {
             SpawnPlayer(player);
         }
-
     }
 
-    void SpawnPlayer(PlayerRef playerRef)
+    private void SpawnPlayer(PlayerRef playerRef)
     {
         if (!Runner.IsServer) return;
 
         var index = playerRef % spawnPoints.Length;
         var spawnPoint = spawnPoints[index].transform.position;
-        Runner.Spawn(playerNetworkPrefab, spawnPoint, Quaternion.identity, playerRef);
+        var playerObject = Runner.Spawn(playerNetworkPrefab, spawnPoint, Quaternion.identity, playerRef);
+
+        Runner.SetPlayerObject(playerRef, playerObject);
+    }
+
+    private void DespawnPlayer(PlayerRef playerRef)
+    {
+        if (!Runner.IsServer) return;
+
+        if (Runner.TryGetPlayerObject(playerRef, out var playerNetworkObject))
+        {
+            Runner.Despawn(playerNetworkObject);
+        }
+
+        //Reset player object
+        Runner.SetPlayerObject(playerRef, null);
 
     }
 
     public void PlayerJoined(PlayerRef player)
     {
         SpawnPlayer(player);
+    }
+
+    public void PlayerLeft(PlayerRef player)
+    {
+        DespawnPlayer(player);
     }
 }

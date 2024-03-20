@@ -12,11 +12,14 @@ public class GlobalManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject); // シーン遷移で破棄されないようにする
         }
         else
         {
-            Destroy(gameObject);
+            if (Instance != this)
+            {
+                Destroy(gameObject); // すでにインスタンスが存在する場合は、この新しいインスタンスを破棄
+            }
         }
     }
 }

@@ -31,6 +31,8 @@ public class CreateNicknamePanel : LobbyPanelBase
         string nickName = inputField.text;
         if (nickName.Length >= MAX_CHAR_FORNICKNAME)
         {
+            GlobalManager.Instance.networkRunnerController.SetPlayerNickName(nickName);
+
             base.ClosePanel();
             lobbyUIManager.ShowPanel(LobbyPanelType.MiddleSectionPanel);
         }

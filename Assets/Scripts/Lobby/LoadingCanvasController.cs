@@ -22,14 +22,14 @@ public class LoadingCanvasController : MonoBehaviour
     private void OnStartedRunnerConnection()
     {
         this.gameObject.SetActive(true);
-        const string CLIP_Name = "in";
-        StartCoroutine(Utils.PlayAnimAndSetStateWhenFinished(this.gameObject, animator, CLIP_Name));
+        const string CLIP_NAME = "in";
+        StartCoroutine(Utils.PlayAnimAndSetStateWhenFinished(this.gameObject, animator, CLIP_NAME));
     }
 
     private void OnPlayerJoinedSucessfully()
     {
-        const string CLIP_Name = "out";
-        StartCoroutine(Utils.PlayAnimAndSetStateWhenFinished(this.gameObject, animator, CLIP_Name, false));
+        const string CLIP_NAME = "out";
+        StartCoroutine(Utils.PlayAnimAndSetStateWhenFinished(this.gameObject, animator, CLIP_NAME, false));
     }
 
     private void CancelRequest()
