@@ -504,7 +504,7 @@ MonoBehaviour:
   playerNameText: {fileID: 1466627892905921781}
   camera: {fileID: 8020394165185673006}
   moveSpeed: 6
-  jumpForce: 100
+  jumpForce: 500
   _playerName:
     _length: 0
     _data:
@@ -537,6 +537,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 2375754054381162692}
+  pivotGunTransform: {fileID: 2154586926745652213}
+  pivotCanvasTransform: {fileID: 281445435139948021}
 --- !u!1 &4450399557012821115
 GameObject:
   m_ObjectHideFlags: 0

@@ -83,6 +83,8 @@ public class PlayerController : NetworkBehaviour, IBeforeUpdate
 
             CheckJumpInput(input);
         }
+
+        playerVisualController.UpdateScaleTransforms(rb2d.velocity);
     }
 
     public override void Render()
@@ -106,7 +108,7 @@ public class PlayerController : NetworkBehaviour, IBeforeUpdate
     {
         PlayerData data = new PlayerData();
         data.HorizontalInput = horizontal;
-        data.NetworkButtons.Set(PlayerInput.Jump, Input.GetKeyDown(KeyCode.Space));
+        data.NetworkButtons.Set(PlayerInput.Jump, Input.GetKey(KeyCode.Space));
         data.GunPivotRotate = playerWeaponController.LocalQuaternionPivotRotate;
         return data;
     }

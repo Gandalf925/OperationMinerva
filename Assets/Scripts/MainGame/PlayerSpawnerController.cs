@@ -46,6 +46,7 @@ public class PlayerSpawnerController : NetworkBehaviour, IPlayerJoined, IPlayerL
 
     public void PlayerJoined(PlayerRef player)
     {
+        if (!Runner.IsServer) return;
         SpawnPlayer(player);
     }
 
