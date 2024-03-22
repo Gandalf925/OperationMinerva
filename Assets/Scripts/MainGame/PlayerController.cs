@@ -15,6 +15,7 @@ public class PlayerController : NetworkBehaviour, IBeforeUpdate
     [Networked] public NetworkButtons buttonPrev { get; set; }
     float horizontal;
     Rigidbody2D rb2d;
+    PlayerWeaponController playerWeaponController;
 
     enum PlayerInput
     {
@@ -27,6 +28,7 @@ public class PlayerController : NetworkBehaviour, IBeforeUpdate
     public override void Spawned()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        playerWeaponController = GetComponent<PlayerWeaponController>();
 
         SetLocalObject();
     }
@@ -39,7 +41,7 @@ public class PlayerController : NetworkBehaviour, IBeforeUpdate
 
     void SetPlayerNickName(NetworkString<_8> nickName)
     {
-        playerName = nickName + " " + Object.InputAuthority.PlayerId;
+        playerNameText.text = nickName + " " + Object.InputAuthority.PlayerId;
     }
 
     public void BeforeUpdate()
@@ -56,8 +58,18 @@ public class PlayerController : NetworkBehaviour, IBeforeUpdate
         if (Runner.LocalPlayer == Object.HasInputAuthority)
         {
             camera.SetActive(true);
-            playerNameText.text = GlobalManager.Instance.networkRunnerController.LocalPlayerNickName;
+
+
+            var nickName = GlobalManager.Instance.networkRunnerController.LocalPlayerNickName;
+            RpcSetNickName(nickName);
+            Debug.LogWarning("-----------------" + playerName + "----------");
         }
+    }
+
+    [Rpc(sources: RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    void RpcSetNickName(NetworkString<_8> nickName)
+    {
+        playerName = nickName;
     }
 
     //FUN
@@ -88,6 +100,7 @@ public class PlayerController : NetworkBehaviour, IBeforeUpdate
         PlayerData data = new PlayerData();
         data.HorizontalInput = horizontal;
         data.NetworkButtons.Set(PlayerInput.Jump, Input.GetKeyDown(KeyCode.Space));
+        data.GunPivotRotate = playerWeaponController.LocalQuaternionPivotRotate;
         return data;
     }
 }
