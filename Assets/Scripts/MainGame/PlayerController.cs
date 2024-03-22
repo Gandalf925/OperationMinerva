@@ -18,10 +18,11 @@ public class PlayerController : NetworkBehaviour, IBeforeUpdate
     PlayerWeaponController playerWeaponController;
     PlayerVisualController playerVisualController;
 
-    enum PlayerInput
+    public enum PlayerInput
     {
         None,
-        Jump
+        Jump,
+        Shoot
     }
 
 
@@ -89,7 +90,7 @@ public class PlayerController : NetworkBehaviour, IBeforeUpdate
 
     public override void Render()
     {
-        playerVisualController.RendererVisuals(rb2d.velocity);
+        playerVisualController.RendererVisuals(rb2d.velocity, playerWeaponController.isHoldingShootingKey);
     }
 
     void CheckJumpInput(PlayerData input)
@@ -109,6 +110,7 @@ public class PlayerController : NetworkBehaviour, IBeforeUpdate
         PlayerData data = new PlayerData();
         data.HorizontalInput = horizontal;
         data.NetworkButtons.Set(PlayerInput.Jump, Input.GetKey(KeyCode.Space));
+        data.NetworkButtons.Set(PlayerInput.Shoot, Input.GetButton("Fire1"));
         data.GunPivotRotate = playerWeaponController.LocalQuaternionPivotRotate;
         return data;
     }
