@@ -4,6 +4,8 @@ using UnityEngine;
 public class PlayerWeaponController : NetworkBehaviour, IBeforeUpdate
 {
     public Quaternion LocalQuaternionPivotRotate { get; set; }
+    [SerializeField] NetworkPrefabRef bulletPrefab = NetworkPrefabRef.Empty;
+    [SerializeField] Transform bulletSpawnPoint;
     [SerializeField] float delayBetweenShots = 0.18f;
     [SerializeField] ParticleSystem muzzleEffect;
     [SerializeField] Camera localCamera;
@@ -50,6 +52,8 @@ public class PlayerWeaponController : NetworkBehaviour, IBeforeUpdate
         {
             playMuzzleEffect = true;
             shootCoolDown = TickTimer.CreateFromSeconds(Runner, delayBetweenShots);
+
+            Runner.Spawn(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation, Object.InputAuthority);
         }
         else
         {
