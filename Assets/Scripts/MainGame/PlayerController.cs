@@ -25,8 +25,6 @@ public class PlayerController : NetworkBehaviour, IBeforeUpdate
         Shoot
     }
 
-
-
     public override void Spawned()
     {
         rb2d = GetComponent<Rigidbody2D>();
@@ -65,7 +63,10 @@ public class PlayerController : NetworkBehaviour, IBeforeUpdate
 
             var nickName = GlobalManager.Instance.networkRunnerController.LocalPlayerNickName;
             RpcSetNickName(nickName);
-            Debug.LogWarning("-----------------" + playerName + "----------");
+        }
+        else
+        {
+            GetComponent<NetworkRigidbody2D>().InterpolationDataSource = InterpolationDataSources.Snapshots;
         }
     }
 

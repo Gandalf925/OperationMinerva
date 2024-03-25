@@ -5,10 +5,13 @@ using Fusion;
 
 public class Bullet : NetworkBehaviour
 {
+    [SerializeField] LayerMask playerLayerMask;
     [SerializeField] LayerMask groundLayerMask;
+    [SerializeField] int damage = 10;
     [SerializeField] float moveSpeed = 20;
     [SerializeField] float lifeTimeAmount = 0.8f;
     Collider2D col;
+    List<LagCompensatedHit> hits = new List<LagCompensatedHit>();
 
     [Networked] NetworkBool didHitSomething { get; set; }
     [Networked] TickTimer lifeTimeTimer { get; set; }
@@ -21,7 +24,12 @@ public class Bullet : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        CheckIfHitGround();
+        if (!didHitSomething)
+        {
+            CheckIfHitGround();
+            ChechIfWeHitAPlayer();
+        }
+
 
         if (lifeTimeTimer.ExpiredOrNotRunning(Runner) == false && !didHitSomething)
         {
@@ -30,6 +38,7 @@ public class Bullet : NetworkBehaviour
 
         if (lifeTimeTimer.Expired(Runner) || didHitSomething)
         {
+            lifeTimeTimer = TickTimer.None;
             Runner.Despawn(Object);
         }
     }
@@ -44,4 +53,28 @@ public class Bullet : NetworkBehaviour
             didHitSomething = true;
         }
     }
+
+    void ChechIfWeHitAPlayer()
+    {
+        Runner.LagCompensation.OverlapBox(transform.position, col.bounds.size, Quaternion.identity, Object.InputAuthority, hits, playerLayerMask);
+
+        if (hits.Count <= 0) return;
+
+        foreach (var hit in hits)
+        {
+            if (hit.Hitbox != null)
+            {
+                var player = hit.Hitbox.GetComponentInParent<NetworkObject>();
+                var didNotHitOurOwnPlayer = player.InputAuthority.PlayerId != Object.InputAuthority.PlayerId;
+
+                if (Runner.IsServer && didNotHitOurOwnPlayer)
+                {
+                    player.GetComponent<PlayerHealth>().Rpc_ReducePlayerHealth(damage);
+                }
+                didHitSomething = true;
+                break;
+            }
+        }
+    }
+
 }

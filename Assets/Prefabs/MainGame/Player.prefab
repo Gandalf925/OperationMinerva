@@ -216,6 +216,56 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 3765796132337808150}
+--- !u!1 &2438893373950157582
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8863488745768929069}
+  - component: {fileID: 993890073900898347}
+  m_Layer: 7
+  m_Name: HitBox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8863488745768929069
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2438893373950157582}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.052, y: -0.124, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6664930494312998932}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &993890073900898347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2438893373950157582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1014831617, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 1
+  SphereRadius: 0
+  BoxExtents: {x: 0.2, y: 0.32, z: 0.12}
+  Offset: {x: 0, y: 0, z: 0}
+  Root: {fileID: 3733745847463866888}
+  GizmosColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!1 &2464905911461146150
 GameObject:
   m_ObjectHideFlags: 0
@@ -245,6 +295,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8863488745768929069}
   - {fileID: 3785057834122375440}
   - {fileID: 4881890174148975067}
   m_Father: {fileID: 1608904355896734320}
@@ -346,6 +397,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1608904355896734320}
+  - component: {fileID: 3733745847463866888}
   - component: {fileID: 4387898401192053504}
   - component: {fileID: 4114974091225555481}
   - component: {fileID: 8569969173922548344}
@@ -354,6 +406,7 @@ GameObject:
   - component: {fileID: 8306990227762822669}
   - component: {fileID: 8581327143205725057}
   - component: {fileID: 3687263708401606902}
+  - component: {fileID: 2212758889846335692}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -377,6 +430,25 @@ Transform:
   - {fileID: 6664930494312998932}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3733745847463866888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4424918574033797604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1039544458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  Config: 1
+  BroadRadius: 0.5304417
+  Offset: {x: 0, y: 0, z: 0}
+  GizmosColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  Hitboxes:
+  - {fileID: 993890073900898347}
 --- !u!114 &4387898401192053504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -399,10 +471,12 @@ MonoBehaviour:
     RawGuidValue: 865ee7f78c06c904dad90181725c8e77
   NestedObjects: []
   NetworkedBehaviours:
+  - {fileID: 3733745847463866888}
   - {fileID: 8569969173922548344}
   - {fileID: 7087191675642164044}
   - {fileID: 8306990227762822669}
   - {fileID: 8581327143205725057}
+  - {fileID: 2212758889846335692}
   - {fileID: 5305515015410073820}
   SimulationBehaviours: []
 --- !u!50 &4114974091225555481
@@ -578,6 +652,21 @@ MonoBehaviour:
   animator: {fileID: 2375754054381162692}
   pivotGunTransform: {fileID: 2154586926745652213}
   pivotCanvasTransform: {fileID: 281445435139948021}
+--- !u!114 &2212758889846335692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4424918574033797604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 942a9df7528ea0745bdabd1a1040f8e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  fillAmountImage: {fileID: 7464255320278477412}
+  healthAmountText: {fileID: 1610250226843010970}
 --- !u!1 &4450399557012821115
 GameObject:
   m_ObjectHideFlags: 0
